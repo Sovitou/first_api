@@ -7,9 +7,8 @@ export const findUSer = (req, res) => {
   const { id } = req.params;
   const foundUser = users.find((user) => user.id === id);
 
-  if (foundUser) {
-    res.send({ foundUser });
-  } else {
+  if (!foundUser) {
     res.send("User not found");
   }
+  res.send({ foundUser });
 };
