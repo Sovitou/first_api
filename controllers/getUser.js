@@ -3,12 +3,8 @@ export const getUser = (req, res) => {
   res.json({ users });
 };
 
-export const findUSer = (req, res) => {
-  const { id } = req.params;
-  const foundUser = users.find((user) => user.id === id);
+export const findUser = (req, res) => {
+  const { findUserIndex } = req;
 
-  if (!foundUser) {
-    res.send("User not found");
-  }
-  res.send({ foundUser });
+  res.json(findUserIndex);
 };

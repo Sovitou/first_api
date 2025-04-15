@@ -4,5 +4,5 @@ export const createUser = (req, res) => {
   const newUser = req.body;
 
   users.push({ id: uuidv4(), ...newUser });
-  res.send(`User has been added.`);
+  res.send(`User has been added.`).json(newUser);
 };

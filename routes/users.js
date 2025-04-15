@@ -1,9 +1,11 @@
 import express from "express";
 import { v4 as uuidv4 } from "uuid";
-import { findUSer, getUser } from "../controllers/getUser.js";
+import { findUser, getUser } from "../controllers/getUser.js";
 import { createUser } from "../controllers/createUser.js";
 import { deleteUser } from "../controllers/deleteUser.js";
 import { updateUser } from "../controllers/updateUser.js";
+
+import { validateUserId } from "../middlewares/validateUserId.js";
 
 const router = express.Router();
 
@@ -23,12 +25,12 @@ router.get("/", getUser);
 router.post("/", createUser);
 
 //find user
-router.get("/:id", findUSer);
+router.get("/:id", validateUserId, findUser);
 
 //delete user
-router.delete("/:id", deleteUser);
+router.delete("/:id", validateUserId, deleteUser);
 
 //update user
-router.patch("/:id", updateUser);
+router.patch("/:id", validateUserId, updateUser);
 
 export default router;
