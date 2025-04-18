@@ -1,6 +1,5 @@
 import express from "express";
 import { v4 as uuidv4 } from "uuid";
-import { findUser, getUser } from "../controllers/getUser.js";
 import { createUser } from "../controllers/createUser.js";
 import { deleteUser } from "../controllers/deleteUser.js";
 import { updateUser } from "../controllers/updateUser.js";
@@ -19,18 +18,14 @@ export let users = [
 ];
 
 //get all users
-router.get("/", getUser);
 
 //create newUser
-router.post("/", createUser);
-
-//find user
-router.get("/:id", validateUserId, findUser);
+router.post("/users", createUser);
 
 //delete user
-router.delete("/:id", validateUserId, deleteUser);
+router.delete("/users/:id", validateUserId, deleteUser);
 
 //update user
-router.patch("/:id", validateUserId, updateUser);
+router.patch("/users/:id", validateUserId, updateUser);
 
 export default router;
