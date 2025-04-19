@@ -1,17 +1,18 @@
-import { users } from "../routes/users.js";
+export const updateUser = async (req, res) => {
+  const { name, sex } = req.body;
+  const user = req.user;
 
-export const updateUser = (req, res) => {
-  const { name, age, sex } = req.body;
+  try {
+    if (name !== undefined) user.name = name;
+    if (sex !== undefined) user.sex = sex;
 
-  const { findUserIndex } = req;
+    await user.save();
 
-  const updatedUser = { ...users[findUserIndex] };
-
-  if (name !== undefined) updatedUser.name = name;
-  if (age !== undefined) updatedUser.age = age;
-  if (sex !== undefined) updatedUser.sex = sex;
-
-  users[findUserIndex] = updatedUser;
+    res.status(200).json({ msg: "User updated successfully", user });
+  } catch (error) {
+    console.error("Error updating user:", error);
+    res.status(500).json({ error: "Failed to update user" });
+  }
 
   res.status(200).json({ msg: updatedUser });
 };

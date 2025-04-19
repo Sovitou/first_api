@@ -1,10 +1,15 @@
-import { users } from "../routes/users.js";
+export const deleteUser = async (req, res) => {
+  const user = req.user;
 
-export const deleteUser = (req, res) => {
-  const { id } = req.params;
-  const { findUserIndex } = req;
+  try {
+    await user.destroy();
+    await user.save();
 
-  users.splice(findUserIndex, 1); // removes the user from the array
+    res.status(200).json({ msg: "User deleted successfully", user });
+  } catch (error) {
+    console.error("Error delecting user:", error);
+    res.status(500).json({ error: "Failed to delete user" });
+  }
 
-  res.send(`User with ID: ${id} has been deleted.`);
+  res.status(200).json({ msg: updatedUser });
 };

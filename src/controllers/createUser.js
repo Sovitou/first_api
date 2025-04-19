@@ -1,8 +1,17 @@
-import { v4 as uuidv4 } from "uuid";
-import { users } from "../routes/users.js";
-export const createUser = (req, res) => {
-  const newUser = req.body;
+import { USERS } from "../models/userDB.js";
 
-  users.push({ id: uuidv4(), ...newUser });
-  res.send(`User has been added.`).json(newUser);
+export const createUser = async (req, res) => {
+  const { name, sex } = req.body;
+
+  const newUser = USERS.build({ name, sex });
+
+  try {
+    await newUser.save();
+    res.status(201).json({
+      message: "User has been added.",
+      user: newUser,
+    });
+  } catch (error) {
+    res.json(error);
+  }
 };

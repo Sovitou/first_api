@@ -1,23 +1,18 @@
 import express from "express";
-import { v4 as uuidv4 } from "uuid";
 import { createUser } from "../controllers/createUser.js";
 import { deleteUser } from "../controllers/deleteUser.js";
 import { updateUser } from "../controllers/updateUser.js";
-
 import { validateUserId } from "../middlewares/validateUserId.js";
+import { findAllUsers } from "../controllers/findAllUsers.js";
+import { findUser } from "../controllers/findUser.js";
 
 const router = express.Router();
 
-export let users = [
-  {
-    id: uuidv4(),
-    name: "Sophal",
-    age: 19,
-    sex: "Male",
-  },
-];
+//find all user
+router.get("/users", findAllUsers);
 
-//get all users
+//find user by id
+router.get("/users/:id", findUser);
 
 //create newUser
 router.post("/users", createUser);
@@ -25,7 +20,7 @@ router.post("/users", createUser);
 //delete user
 router.delete("/users/:id", validateUserId, deleteUser);
 
-//update user
+// //update user
 router.patch("/users/:id", validateUserId, updateUser);
 
 export default router;
