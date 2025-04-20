@@ -5,6 +5,8 @@ import { updateUser } from "../controllers/updateUser.js";
 import { validateUserId } from "../middlewares/validateUserId.js";
 import { findAllUsers } from "../controllers/findAllUsers.js";
 import { findUser } from "../controllers/findUser.js";
+import { validateFields } from "../middlewares/validationSchema.js";
+import { checkSchema } from "express-validator";
 
 const router = express.Router();
 
@@ -15,12 +17,17 @@ router.get("/users", findAllUsers);
 router.get("/users/:id", findUser);
 
 //create newUser
-router.post("/users", createUser);
+router.post("/users", checkSchema(validateFields), createUser);
 
 //delete user
 router.delete("/users/:id", validateUserId, deleteUser);
 
 // //update user
-router.patch("/users/:id", validateUserId, updateUser);
+router.patch(
+  "/users/:id",
+  validateUserId,
+  checkSchema(validateFields),
+  updateUser
+);
 
 export default router;

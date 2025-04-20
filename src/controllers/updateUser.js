@@ -13,6 +13,4 @@ export const updateUser = async (req, res) => {
     console.error("Error updating user:", error);
     res.status(500).json({ error: "Failed to update user" });
   }
-
-  res.status(200).json({ msg: updatedUser });
 };
